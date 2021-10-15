@@ -1,0 +1,197 @@
+service: banking-api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: '20201221'
+  environment:
+    NODE_OPTIONS: --enable-source-maps
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'dynamodb:*'
+          Resource:
+            - '*'
+  httpApi:
+    authorizers:
+      cognito-auth:
+        identitySource: $request.header.Authorization
+        issuerUrl:
+          'Fn::GetAtt': [cognitoUserPool, ProviderURL]
+        audience:
+          - Ref: cognitoUserPoolApp
+  logs:
+    httpApi: true
+  tracing:
+    apiGateway: true
+    lambda: true
+
+plugins:
+  - serverless-bundle
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: banking-api.aws.georgemccarron.com
+    certificateName: '*.aws.georgemccarron.com'
+    endpointType: regional
+    apiType: http
+    autoDomain: true
+
+package:
+  individually: true
+
+functions:
+  create-customers:
+    handler: src/functions/createCustomers/handler.handler
+    events:
+      - httpApi:
+          path: /customers
+          method: post
+          authorizer:
+            name: cognito-auth
+  get-customers:
+    handler: src/functions/getCustomers/handler.handler
+    events:
+      - httpApi:
+          path: /customers
+          method: get
+          authorizer:
+            name: cognito-auth
+      - httpApi:
+          path: /customers/{customerId}
+          method: get
+          authorizer:
+            name: cognito-auth
+  create-accounts:
+    handler: src/functions/createAccounts/handler.handler
+    events:
+      - httpApi:
+          path: /customers/{customerId}/accounts
+          method: post
+          authorizer:
+            name: cognito-auth
+  get-accounts:
+    handler: src/functions/getAccounts/handler.handler
+    events:
+      - httpApi:
+          path: /customers/{customerId}/accounts
+          method: get
+          authorizer:
+            name: cognito-auth
+      - httpApi:
+          path: /accounts/{accountId}
+          method: get
+          authorizer:
+            name: cognito-auth
+  delete-accounts:
+    handler: src/functions/deleteAccounts/handler.handler
+    events:
+      - httpApi:
+          path: /customers/{customerId}/accounts
+          method: delete
+          authorizer:
+            name: cognito-auth
+      - httpApi:
+          path: /accounts/{accountId}
+          method: delete
+          authorizer:
+            name: cognito-auth
+  create-transactions:
+    handler: src/functions/createTransactions/handler.handler
+    events:
+      - httpApi:
+          path: /accounts/{accountId}/transactions
+          method: post
+          authorizer:
+            name: cognito-auth
+  get-transactions:
+    handler: src/functions/getTransactions/handler.handler
+    events:
+      - httpApi:
+          path: /accounts/{accountId}/transactions
+          method: get
+          authorizer:
+            name: cognito-auth
+      - httpApi:
+          path: /transactions/{transactionId}
+          method: get
+          authorizer:
+            name: cognito-auth
+  delete-transactions:
+    handler: src/functions/deleteTransactions/handler.handler
+    events: 
+      - stream:
+          type: dynamodb
+          arn: 
+            'Fn::GetAtt': [bankingTable, StreamArn]
+resources:
+  Resources:
+    bankingTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: banking-api
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: GSI1PK
+            AttributeType: S
+          - AttributeName: GSI1SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification:
+          StreamViewType: KEYS_ONLY
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1PK
+                KeyType: HASH
+              - AttributeName: GSI1SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+    cognitoUserPool:
+      Type: AWS::Cognito::UserPool
+    cognitoUserPoolApp:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        AccessTokenValidity: 24 # hours
+        AllowedOAuthFlows:
+          - implicit
+        AllowedOAuthFlowsUserPoolClient: true
+        AllowedOAuthScopes:
+          - openid
+        CallbackURLs:
+          - https://d1gl1hjskbrakv.cloudfront.net/index.html
+        DefaultRedirectURI: https://d1gl1hjskbrakv.cloudfront.net/index.html
+        ExplicitAuthFlows:
+          - ALLOW_USER_PASSWORD_AUTH
+          - ALLOW_REFRESH_TOKEN_AUTH
+        IdTokenValidity: 24 # hours
+        LogoutURLs:
+          - http://localhost:3000/abc
+        SupportedIdentityProviders:
+          - COGNITO
+        UserPoolId:
+          Ref: cognitoUserPool
+    cognitoUserPoolAppDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties:
+        UserPoolId:
+          Ref: cognitoUserPool
+        Domain: mccarron-banking-api-test

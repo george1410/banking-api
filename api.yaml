@@ -1,0 +1,46 @@
+openapi: "3.0.1"
+info:
+  title: "dev-banking-api"
+  version: "1.0"
+servers:
+- url: "https://banking-api.aws.georgemccarron.com"
+security:
+  - cognito-auth: []
+paths:
+  /accounts:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /accounts"
+    post:
+      responses:
+        default:
+          description: "Default response for POST /accounts"
+    delete:
+      responses:
+        default:
+          description: "Default response for DELETE /accounts"
+  /accounts/{accountId}:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /accounts/{accountId}"
+  /accounts/{accountId}/transactions:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /accounts/{accountId}/transactions"
+    post:
+      responses:
+        default:
+          description: "Default response for POST /accounts/{accountId}/transactions"
+  /transactions/{transactionId}:
+    get:
+      responses:
+        default:
+          description: "Default response for GET /transactions/{transactionId}"
+components:
+  securitySchemes:
+    cognito-auth:
+      type: http
+      scheme: bearer
