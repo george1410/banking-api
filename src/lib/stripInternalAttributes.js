@@ -3,7 +3,7 @@ const stripInternalAttributes = ({
   SK,
   GSI1PK: GSI1PK,
   GSI1SK: GSI1SK,
-  ...account
-}) => account;
+  ...entity
+}) => entity;
 
 export default stripInternalAttributes;
