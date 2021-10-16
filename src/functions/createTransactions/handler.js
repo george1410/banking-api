@@ -26,5 +26,9 @@ export const handler = async (event) => {
     newTransactions
   );
 
-  return transactions;
+  return {
+    statusCode: 201,
+    body: JSON.stringify(transactions),
+    headers: { 'Content-Type': 'application/json' },
+  };
 };

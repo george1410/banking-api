@@ -22,5 +22,9 @@ export const handler = async (event) => {
 
   const customers = await Customers(userId).insertCustomers(newCustomers);
 
-  return customers;
+  return {
+    statusCode: 201,
+    body: JSON.stringify(customers),
+    headers: { 'Content-Type': 'application/json' },
+  };
 };
