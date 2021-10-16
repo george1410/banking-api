@@ -24,7 +24,7 @@ const validateRequestBody = (body, schema) => {
     };
   }
 
-  return result.value;
+  return result;
 };
 
 export default validateRequestBody;
