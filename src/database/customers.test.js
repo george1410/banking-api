@@ -124,6 +124,65 @@ describe('Customers data layer', () => {
         },
       ]);
     });
+
+    test('should return serializable customer data with IDs', async () => {
+      const customerData = [
+        {
+          firstName: 'George',
+          lastName: 'McCarron',
+          email: 'hello@georgemccarron.com',
+          address: {
+            streetAddress: '10 High Street',
+            city: 'Dartford',
+            state: 'Kent',
+            zipCode: 'DA1 1AA',
+            country: 'UK',
+          },
+        },
+        {
+          firstName: 'John',
+          lastName: 'Smith',
+          email: 'john.smith@example.com',
+          address: {
+            streetAddress: '19 Some Street',
+            city: 'Los Angeles',
+            state: 'California',
+            zipCode: '12345',
+            country: 'United States',
+          },
+        },
+      ];
+      const customers = await Customers(userId).insertCustomers(customerData);
+
+      expect(customers).toEqual([
+        {
+          customerId: 'mockId',
+          firstName: 'George',
+          lastName: 'McCarron',
+          email: 'hello@georgemccarron.com',
+          address: {
+            streetAddress: '10 High Street',
+            city: 'Dartford',
+            state: 'Kent',
+            zipCode: 'DA1 1AA',
+            country: 'UK',
+          },
+        },
+        {
+          customerId: 'mockId',
+          firstName: 'John',
+          lastName: 'Smith',
+          email: 'john.smith@example.com',
+          address: {
+            streetAddress: '19 Some Street',
+            city: 'Los Angeles',
+            state: 'California',
+            zipCode: '12345',
+            country: 'United States',
+          },
+        },
+      ]);
+    });
   });
 
   describe('get single customer', () => {
