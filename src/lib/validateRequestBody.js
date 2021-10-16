@@ -15,6 +15,7 @@ const validateRequestBody = (body, schema) => {
     abortEarly: false,
     errors: { wrap: { label: false } },
   });
+
   if (result.error) {
     return {
       error: {
