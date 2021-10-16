@@ -1,4 +1,5 @@
 import Transactions from '../../database/transactions';
+import generateResponse from '../../lib/generateResponse';
 import validateRequestBody from '../../lib/validateRequestBody';
 import generateTransactions from './generateTransactions';
 import createTransactionsBodySchema from './requestSchema';
@@ -26,9 +27,8 @@ export const handler = async (event) => {
     newTransactions
   );
 
-  return {
+  return generateResponse({
     statusCode: 201,
-    body: JSON.stringify(transactions),
-    headers: { 'Content-Type': 'application/json' },
-  };
+    body: transactions,
+  });
 };

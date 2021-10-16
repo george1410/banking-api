@@ -26,9 +26,8 @@ export const handler = async (event) => {
     newAccounts
   );
 
-  return {
+  return generateResponse({
     statusCode: 201,
-    body: JSON.stringify(accounts),
-    headers: { 'Content-Type': 'application/json' },
-  };
+    body: accounts,
+  });
 };
