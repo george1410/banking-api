@@ -1,46 +1,248 @@
 openapi: "3.0.1"
 info:
-  title: "dev-banking-api"
+  title: dev-banking-api
   version: "1.0"
 servers:
-- url: "https://banking-api.aws.georgemccarron.com"
+- url: https://banking-api.aws.georgemccarron.com
 security:
   - cognito-auth: []
+
 paths:
-  /accounts:
-    get:
-      responses:
-        default:
-          description: "Default response for GET /accounts"
-    post:
-      responses:
-        default:
-          description: "Default response for POST /accounts"
-    delete:
-      responses:
-        default:
-          description: "Default response for DELETE /accounts"
   /accounts/{accountId}:
     get:
+      tags:
+        - Accounts
       responses:
-        default:
-          description: "Default response for GET /accounts/{accountId}"
+        200: 
+          description: An Account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account' 
+    delete:
+      tags:
+        - Accounts
+      responses:
+        200:
+          description: Account deleted successfully
+    parameters:
+      - name: accountId
+        in: path
+        description: Generated path parameter for accountId
+        required: true
+        schema:
+          type: string
+  /customers/{customerId}/accounts:
+    get:
+      tags:
+        - Customers
+      responses:
+        200:
+          description: An array of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+    post:
+      tags:
+        - Customers
+      responses:
+        201:
+          description: An array of the newly created accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+    delete:
+      tags:
+        - Customers
+      responses:
+        200:
+          description: Accounts deleted successfully
+    parameters:
+      - name: customerId
+        in: path
+        description: Generated path parameter for customerId
+        required: true
+        schema:
+          type: string
   /accounts/{accountId}/transactions:
     get:
+      tags:
+        - Transactions
       responses:
-        default:
-          description: "Default response for GET /accounts/{accountId}/transactions"
+        200:
+          description: An array of Transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
     post:
+      tags:
+        - Transactions
       responses:
-        default:
-          description: "Default response for POST /accounts/{accountId}/transactions"
+        201:
+          description: An array of the newly created Transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+    parameters:
+      - name: accountId
+        in: path
+        description: Generated path parameter for accountId
+        required: true
+        schema:
+          type: string
+  /customers:
+    get:
+      tags:
+        - Customers
+      responses:
+        200:
+          description: An array of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    post:
+      tags:
+        - Customers
+      responses:
+        201:
+          description: The newly created customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        400:
+          description: Bad Request
+  /customers/{customerId}:
+    get:
+      tags:
+        - Customers
+      responses:
+        200:
+          description: A customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    parameters:
+      - name: customerId
+        in: path
+        description: Generated path parameter for customerId
+        required: true
+        schema:
+          type: string
   /transactions/{transactionId}:
     get:
+      tags:
+        - Transactions
       responses:
-        default:
-          description: "Default response for GET /transactions/{transactionId}"
+        200:
+          description: A transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+    parameters:
+      - name: transactionId
+        in: path
+        description: Generated path parameter for transactionId
+        required: true
+        schema:
+          type: string
+
 components:
   securitySchemes:
     cognito-auth:
       type: http
       scheme: bearer
+  schemas:
+    Customer:
+      type: object
+      properties:
+        customerId: 
+          type: string
+          example: 4luMm6f6sbPZLnYHEDjttM
+        firstName:
+          type: string
+          example: George
+        lastName:
+          type: string
+          example: McCarron
+        email:
+          type: string
+          example: hello@georgemccarron.com
+        address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        streetAddress:
+          type: string
+          example: 10 High Street
+        city:
+          type: string
+          example: Dartford
+        state:
+          type: string
+          example: Kent
+        zipCode:
+          type: string
+          example: DA1 1AA
+        country:
+          type: string
+          example: United Kingdom
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: string
+          example: 3YaeOYszLHL28ldk1AyArO
+        customerId:
+          type: string
+          example: 4luMm6f6sbPZLnYHEDjttM
+        balance:
+          type: number
+          example: 12.34
+        accountType: 
+          type: string
+          enum:
+            - Current
+            - Savings
+          example: Current
+    Transaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          example: 2IoHkRtvooFD5MDTsiY4Gt
+        accountId:
+          type: string
+          example: 3YaeOYszLHL28ldk1AyArO
+        amount:
+          type: number
+          example: -12.34
+        transactionDate:
+          type: string
+          format: date-time
+        merchant:
+          type: string
+          example: ASDA
+        category:
+          type: string
+          example: Groceries
