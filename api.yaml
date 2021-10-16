@@ -35,7 +35,7 @@ paths:
   /customers/{customerId}/accounts:
     get:
       tags:
-        - Customers
+        - Accounts
       responses:
         200:
           description: An array of accounts
@@ -47,7 +47,7 @@ paths:
                   $ref: '#/components/schemas/Account'
     post:
       tags:
-        - Customers
+        - Accounts
       responses:
         201:
           description: An array of the newly created accounts
@@ -59,7 +59,7 @@ paths:
                   $ref: '#/components/schemas/Account'
     delete:
       tags:
-        - Customers
+        - Accounts
       responses:
         200:
           description: Accounts deleted successfully
