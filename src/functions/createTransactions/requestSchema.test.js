@@ -54,6 +54,7 @@ describe('Create transactions request schema', () => {
     [[undefined]],
     [[1, 2, 3]],
     [{}],
+    [[{ blah: 'qwerty' }]],
     [[{ amount: 0 }]],
     [[{ amount: 0.0 }]],
     [[{ amount: 123.456 }]],
