@@ -1,13 +1,15 @@
 const validateRequestBody = (body, schema) => {
-  let parsedBody;
-  try {
-    parsedBody = JSON.parse(body);
-  } catch (err) {
-    return {
-      error: {
-        message: 'Malformed JSON',
-      },
-    };
+  let parsedBody = body;
+  if (body !== undefined) {
+    try {
+      parsedBody = JSON.parse(body);
+    } catch (err) {
+      return {
+        error: {
+          message: 'Malformed JSON',
+        },
+      };
+    }
   }
 
   const result = schema.validate(parsedBody, {

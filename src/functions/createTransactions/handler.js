@@ -9,9 +9,10 @@ export const handler = async (event) => {
   const { accountId } = event.pathParameters;
   const userId = event.requestContext.authorizer.jwt.claims.sub;
 
-  const { value: customData = null, error = null } = event.body
-    ? validateRequestBody(event.body, createTransactionsBodySchema)
-    : {};
+  const { value: customData = null, error = null } = validateRequestBody(
+    event.body,
+    createTransactionsBodySchema
+  );
 
   if (error) {
     return {

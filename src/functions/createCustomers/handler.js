@@ -8,9 +8,10 @@ export const handler = async (event) => {
   const { quantity } = event.queryStringParameters || {};
   const userId = event.requestContext.authorizer.jwt.claims.sub;
 
-  const { value: customData = null, error = null } = event.body
-    ? validateRequestBody(event.body, createCustomersBodySchema)
-    : {};
+  const { value: customData = null, error = null } = validateRequestBody(
+    event.body,
+    createCustomersBodySchema
+  );
 
   if (error) {
     return {
