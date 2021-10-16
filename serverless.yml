@@ -16,6 +16,7 @@ provider:
           Resource:
             - '*'
   httpApi:
+    cors: true
     authorizers:
       cognito-auth:
         identitySource: $request.header.Authorization
