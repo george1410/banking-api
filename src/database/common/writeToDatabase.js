@@ -1,16 +1,15 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
-import toChunks from './toChunks';
+import toChunks from '../../lib/toChunks';
 
 const client = new DynamoDBClient();
 const ddbClient = DynamoDBDocument.from(client);
 
-const deleteFromDatabase = async (keys) => {
-  const requests = keys.map(({ PK, SK }) => ({
-    DeleteRequest: {
-      Key: {
-        PK,
-        SK,
+const writeToDatabase = async (items) => {
+  const requests = items.map((item) => ({
+    PutRequest: {
+      Item: {
+        ...item,
       },
     },
   }));
@@ -20,7 +19,7 @@ const deleteFromDatabase = async (keys) => {
   for (const chunk of chunkedRequests) {
     const params = {
       RequestItems: {
-        ['banking-api']: chunk,
+        'banking-api': chunk,
       },
     };
 
@@ -33,4 +32,4 @@ const deleteFromDatabase = async (keys) => {
   }
 };
 
-export default deleteFromDatabase;
+export default writeToDatabase;

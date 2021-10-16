@@ -1,11 +1,11 @@
-import deleteByKey from '../lib/deleteByKey';
-import deleteFromDatabase from '../lib/deleteFromDatabase';
-import fetchFromDatabase from '../lib/fetchFromDatabase';
+import deleteByKey from './common/deleteByKey';
+import deleteFromDatabase from './common/deleteFromDatabase';
+import fetchFromDatabase from './common/fetchFromDatabase';
 import generateId from '../lib/generateId';
-import getByKey from '../lib/getByKey';
-import stripInternalAttributes from '../lib/stripInternalAttributes';
-import updateItem from '../lib/updateItem';
-import writeToDatabase from '../lib/writeToDatabase';
+import getByKey from './common/getByKey';
+import stripInternalAttributes from './common/stripInternalAttributes';
+import updateItem from './common/updateItem';
+import writeToDatabase from './common/writeToDatabase';
 
 const addMetadata = (userId, customerId) => (accountData) => {
   const accountId = generateId();

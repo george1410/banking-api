@@ -1,10 +1,10 @@
 import currency from 'currency.js';
-import deleteFromDatabase from '../lib/deleteFromDatabase';
-import fetchFromDatabase from '../lib/fetchFromDatabase';
+import deleteFromDatabase from './common/deleteFromDatabase';
+import fetchFromDatabase from './common/fetchFromDatabase';
 import generateId from '../lib/generateId';
-import getByKey from '../lib/getByKey';
-import stripInternalAttributes from '../lib/stripInternalAttributes';
-import writeToDatabase from '../lib/writeToDatabase';
+import getByKey from './common/getByKey';
+import stripInternalAttributes from './common/stripInternalAttributes';
+import writeToDatabase from './common/writeToDatabase';
 import Accounts from './accounts';
 
 const addMetadata = (userId, accountId) => (transactionData) => {
