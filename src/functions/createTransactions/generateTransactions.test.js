@@ -61,6 +61,18 @@ describe('Generate transactions', () => {
     });
 
     describe('when quantity provided', () => {
+      test('should make a request to the random data api', async () => {
+        await generateTransactions(null, 5);
+        expect(axios.get).toHaveBeenCalledWith(
+          'https://random-data-api.com/api/company/random_company',
+          {
+            params: {
+              size: 5,
+            },
+          }
+        );
+      });
+
       test('should generate the desired number of transactions', async () => {
         const transactions = await generateTransactions(null, 2);
         expect(transactions).toHaveLength(2);
@@ -110,6 +122,18 @@ describe('Generate transactions', () => {
 
   describe('when custom data is provided', () => {
     describe('when no quantity provided', () => {
+      test('should make a request to the random data api', async () => {
+        await generateTransactions([{}, {}, {}]);
+        expect(axios.get).toHaveBeenCalledWith(
+          'https://random-data-api.com/api/company/random_company',
+          {
+            params: {
+              size: 3,
+            },
+          }
+        );
+      });
+
       test('should generate the number of transactions specified by the input length', async () => {
         const customData3Items = [{}, {}, {}];
         const threeTransactions = await generateTransactions(customData3Items);
@@ -209,6 +233,18 @@ describe('Generate transactions', () => {
 
     describe('when quantity provided', () => {
       const customData3Items = [{}, {}, {}];
+
+      test('should make a request to the random data api', async () => {
+        await generateTransactions(customData3Items, 5);
+        expect(axios.get).toHaveBeenCalledWith(
+          'https://random-data-api.com/api/company/random_company',
+          {
+            params: {
+              size: 3,
+            },
+          }
+        );
+      });
 
       test('should ignore the quantity if it is greater than the custom data length', async () => {
         const threeTransactions = await generateTransactions(
