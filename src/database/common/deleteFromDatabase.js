@@ -1,9 +1,12 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import {
+  BatchWriteCommand,
+  DynamoDBDocumentClient,
+} from '@aws-sdk/lib-dynamodb';
 import toChunks from '../../lib/toChunks';
 
 const client = new DynamoDBClient();
-const ddbClient = DynamoDBDocument.from(client);
+const ddbClient = DynamoDBDocumentClient.from(client);
 
 const deleteFromDatabase = async (keys) => {
   const requests = keys.map(({ PK, SK }) => ({
@@ -25,7 +28,7 @@ const deleteFromDatabase = async (keys) => {
     };
 
     try {
-      await ddbClient.batchWrite(params);
+      await ddbClient.send(new BatchWriteCommand(params));
     } catch (err) {
       console.error(err);
       throw new Error(500);
