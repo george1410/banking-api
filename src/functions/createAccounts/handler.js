@@ -1,4 +1,5 @@
 import Accounts from '../../database/accounts';
+import generateResponse from '../../lib/generateResponse';
 import validateRequestBody from '../../lib/validateRequestBody';
 import generateAccounts from './generateAccounts';
 import createAccountsBodySchema from './requestSchema';

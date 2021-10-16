@@ -1,4 +1,5 @@
 import Customers from '../../database/customers';
+import generateResponse from '../../lib/generateResponse';
 import validateRequestBody from '../../lib/validateRequestBody';
 import generateCustomers from './generateCustomers';
 import createCustomersBodySchema from './requestSchema';
