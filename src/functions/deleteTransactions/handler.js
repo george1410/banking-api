@@ -14,12 +14,12 @@ export const handler = async (event) => {
       await Transactions(userId).deleteAllTransactions(accountId);
     }
 
-    return {
+    return generateResponse({
       statusCode: 200,
-    };
+    });
   } catch (err) {
-    return {
+    return generateResponse({
       statusCode: 500,
-    };
+    });
   }
 };

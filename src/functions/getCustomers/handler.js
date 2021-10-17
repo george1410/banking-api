@@ -8,8 +8,16 @@ export const handler = async (event) => {
 
   if (customerId) {
     const customer = await customers.getCustomer(customerId);
-    return customer || { statusCode: 404 };
+    return (
+      generateResponse({ body: customer }) ||
+      generateResponse({
+        statusCode: 404,
+      })
+    );
   } else {
-    return await customers.getAllCustomers();
+    const customers = await customers.getAllCustomers();
+    return generateResponse({
+      body: customers,
+    });
   }
 };

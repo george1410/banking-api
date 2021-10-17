@@ -12,12 +12,13 @@ export const handler = async (event) => {
       await accounts.deleteAllAccounts(customerId);
     }
 
-    return {
+    return generateResponse({
       statusCode: 200,
-    };
+    });
   } catch (err) {
-    return {
+    return generateResponse({
       statusCode: 500,
-    };
+      body: { error },
+    });
   }
 };

@@ -15,10 +15,10 @@ export const handler = async (event) => {
   );
 
   if (error) {
-    return {
+    return generateResponse({
       statusCode: 400,
-      body: JSON.stringify({ error }),
-    };
+      body: { error },
+    });
   }
 
   const newTransactions = await generateTransactions(customData, quantity);

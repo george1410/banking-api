@@ -8,8 +8,16 @@ export const handler = async (event) => {
 
   if (accountId) {
     const account = await accounts.getAccount(accountId);
-    return account || { statusCode: 404 };
+    return (
+      generateResponse({ body: account }) ||
+      generateResponse({
+        statusCode: 404,
+      })
+    );
   } else {
-    return await accounts.getAllAccounts(customerId);
+    const accounts = await accounts.getAllAccounts(customerId);
+    return generateResponse({
+      body: accounts,
+    });
   }
 };

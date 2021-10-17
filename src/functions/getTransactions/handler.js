@@ -7,8 +7,16 @@ export const handler = async (event) => {
   const transactions = Transactions(userId);
   if (transactionId) {
     const transaction = await transactions.getTransaction(transactionId);
-    return transaction || { statusCode: 404 };
+    return (
+      generateResponse({ body: transaction }) ||
+      generateResponse({
+        statusCode: 404,
+      })
+    );
   } else {
-    return await transactions.getAllTransactions(accountId);
+    const transactions = await transactions.getAllTransactions(accountId);
+    return generateResponse({
+      body: transactions,
+    });
   }
 };
