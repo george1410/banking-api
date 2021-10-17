@@ -10,9 +10,17 @@ beforeEach(() => {
 
 describe('Get by key', () => {
   test('should return the item from the database', async () => {
-    ddbMock.on(GetCommand).resolves({
-      Item: { PK: 'somePK', SK: 'someSK', extraStuff: 'blah' },
-    });
+    ddbMock
+      .rejects('mocked rejection')
+      .on(GetCommand, {
+        Key: {
+          PK: 'somePK',
+          SK: 'someSK',
+        },
+      })
+      .resolves({
+        Item: { PK: 'somePK', SK: 'someSK', extraStuff: 'blah' },
+      });
 
     const item = await getByKey('somePK', 'someSK');
     expect(item).toEqual({ PK: 'somePK', SK: 'someSK', extraStuff: 'blah' });

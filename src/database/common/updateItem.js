@@ -28,7 +28,6 @@ const updateItem = async (
   try {
     return await ddbClient.send(new UpdateCommand(params));
   } catch (err) {
-    console.error(err);
     throw new Error(500);
   }
 };

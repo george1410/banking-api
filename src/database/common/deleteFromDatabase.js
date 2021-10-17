@@ -30,7 +30,6 @@ const deleteFromDatabase = async (keys) => {
     try {
       await ddbClient.send(new BatchWriteCommand(params));
     } catch (err) {
-      console.error(err);
       throw new Error(500);
     }
   }

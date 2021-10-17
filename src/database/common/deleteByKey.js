@@ -21,7 +21,6 @@ const deleteByKey = async (PK, SK) => {
   try {
     return await ddbClient.send(new DeleteCommand(params));
   } catch (err) {
-    console.error(err);
     throw new Error(500);
   }
 };
