@@ -195,6 +195,13 @@ describe('Transactions data layer', () => {
         transactionDate: '2021-10-16T20:55:39.656Z',
       });
     });
+
+    test('should return null if the transaction does not exist', async () => {
+      getByKey.mockReturnValueOnce(undefined);
+
+      const transaction = await Transactions(userId).getTransaction('mockId1');
+      expect(transaction).toBeNull();
+    });
   });
 
   describe('get all transactions for account', () => {

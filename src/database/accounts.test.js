@@ -129,6 +129,13 @@ describe('Accounts data layer', () => {
         customerId,
       });
     });
+
+    test('should return null if the account does not exist', async () => {
+      getByKey.mockReturnValueOnce(undefined);
+
+      const account = await Accounts(userId).getAccount('mockId1');
+      expect(account).toBeNull();
+    });
   });
 
   describe('get all accounts for customer', () => {

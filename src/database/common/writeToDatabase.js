@@ -23,7 +23,6 @@ const writeToDatabase = async (items) => {
     try {
       await ddbClient.send(new BatchWriteCommand(params));
     } catch (err) {
-      console.error(err);
       throw new Error(500);
     }
   }

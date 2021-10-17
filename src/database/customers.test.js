@@ -208,6 +208,13 @@ describe('Customers data layer', () => {
         },
       });
     });
+
+    test('should return null if the customer does not exist', async () => {
+      getByKey.mockReturnValueOnce(undefined);
+
+      const customer = await Customers(userId).getCustomer('mockId1');
+      expect(customer).toBeNull();
+    });
   });
 
   describe('get all customers', () => {
