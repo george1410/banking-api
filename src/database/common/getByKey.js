@@ -1,13 +1,5 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
-
-const client = new DynamoDBClient();
-
-const marshallOptions = {
-  removeUndefinedValues: true,
-};
-
-const ddbClient = DynamoDBDocumentClient.from(client, { marshallOptions });
+import { GetCommand } from '@aws-sdk/lib-dynamodb';
+import ddbClient from './ddbClient';
 
 const getByKey = async (PK, SK) => {
   const params = {

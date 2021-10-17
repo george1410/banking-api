@@ -1,12 +1,6 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import {
-  BatchWriteCommand,
-  DynamoDBDocumentClient,
-} from '@aws-sdk/lib-dynamodb';
+import { BatchWriteCommand } from '@aws-sdk/lib-dynamodb';
 import toChunks from '../../lib/toChunks';
-
-const client = new DynamoDBClient();
-const ddbClient = DynamoDBDocumentClient.from(client);
+import ddbClient from './ddbClient';
 
 const deleteFromDatabase = async (keys) => {
   const requests = keys.map(({ PK, SK }) => ({

@@ -1,13 +1,5 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, UpdateCommand } from '@aws-sdk/lib-dynamodb';
-
-const client = new DynamoDBClient();
-
-const marshallOptions = {
-  removeUndefinedValues: true,
-};
-
-const ddbClient = DynamoDBDocumentClient.from(client, { marshallOptions });
+import { UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import ddbClient from './ddbClient';
 
 const updateItem = async (
   PK,

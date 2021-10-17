@@ -1,13 +1,5 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DeleteCommand, DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
-
-const client = new DynamoDBClient();
-
-const marshallOptions = {
-  removeUndefinedValues: true,
-};
-
-const ddbClient = DynamoDBDocumentClient.from(client, { marshallOptions });
+import { DeleteCommand } from '@aws-sdk/lib-dynamodb';
+import ddbClient from './ddbClient';
 
 const deleteByKey = async (PK, SK) => {
   const params = {
