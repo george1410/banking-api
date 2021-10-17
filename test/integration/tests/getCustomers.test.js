@@ -138,7 +138,7 @@ describe('Get Customers', () => {
         'Content-Type': 'application/json',
       });
 
-      expect(response.body).toBe(undefined);
+      expect(response.body).toBeNull();
     });
   });
 
