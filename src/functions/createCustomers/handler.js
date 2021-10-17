@@ -8,6 +8,13 @@ export const handler = async (event) => {
   const { quantity } = event.queryStringParameters || {};
   const userId = event.requestContext.authorizer.jwt.claims.sub;
 
+  if (quantity !== undefined && !Number(quantity)) {
+    return generateResponse({
+      statusCode: 400,
+      body: { error: { message: 'Invalid quantity' } },
+    });
+  }
+
   const { value: customData = null, error = null } = validateRequestBody(
     event.body,
     createCustomersBodySchema

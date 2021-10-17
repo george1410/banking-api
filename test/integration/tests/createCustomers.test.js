@@ -107,7 +107,7 @@ describe('Create Customers', () => {
     ]);
   });
 
-  test('should create a multiple customers with custom data if provided', async () => {
+  test('should create multiple customers with custom data if provided', async () => {
     const event = {
       requestContext: {
         authorizer: { jwt: { claims: { sub: 'mock-user-1234' } } },

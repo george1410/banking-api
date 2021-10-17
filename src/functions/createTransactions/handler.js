@@ -9,6 +9,13 @@ export const handler = async (event) => {
   const { accountId } = event.pathParameters;
   const userId = event.requestContext.authorizer.jwt.claims.sub;
 
+  if (quantity !== undefined && !Number(quantity)) {
+    return generateResponse({
+      statusCode: 400,
+      body: { error: { message: 'Invalid quantity' } },
+    });
+  }
+
   const { value: customData = null, error = null } = validateRequestBody(
     event.body,
     createTransactionsBodySchema
