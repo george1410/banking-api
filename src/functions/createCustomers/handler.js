@@ -14,10 +14,10 @@ export const handler = async (event) => {
   );
 
   if (error) {
-    return {
+    return generateResponse({
       statusCode: 400,
-      body: JSON.stringify({ error }),
-    };
+      body: { error },
+    });
   }
 
   const newCustomers = await generateCustomers(customData, quantity);
