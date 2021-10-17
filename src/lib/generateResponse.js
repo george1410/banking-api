@@ -1,5 +1,5 @@
 export default ({ body, statusCode = 200, headers }) => ({
   statusCode,
-  body: JSON.stringify(body),
+  body: body ? JSON.stringify(body) : null,
   headers: { 'Content-Type': 'application/json', ...headers },
 });

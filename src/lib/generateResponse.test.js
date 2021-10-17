@@ -21,7 +21,7 @@ describe('Generate response', () => {
   });
 
   test('should set the body to undefined by default', () => {
-    expect(generateResponse({})).toHaveProperty('body', undefined);
+    expect(generateResponse({})).toHaveProperty('body', null);
   });
 
   test('should set custom headers alongside defaults if provided', () => {
