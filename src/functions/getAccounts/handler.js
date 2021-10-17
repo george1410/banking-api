@@ -9,12 +9,11 @@ export const handler = async (event) => {
 
   if (accountId) {
     const account = await accounts.getAccount(accountId);
-    return (
-      generateResponse({ body: account }) ||
-      generateResponse({
-        statusCode: 404,
-      })
-    );
+    return account
+      ? generateResponse({ body: account })
+      : generateResponse({
+          statusCode: 404,
+        });
   } else {
     const allAccounts = await accounts.getAllAccounts(customerId);
     return generateResponse({

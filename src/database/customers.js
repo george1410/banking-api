@@ -42,7 +42,7 @@ const getAllCustomers = async (userId) => {
 const getCustomer = async (userId, customerId) => {
   const customer = await getByKey(`USER#${userId}`, `CUSTOMER#${customerId}`);
 
-  return stripInternalAttributes(customer);
+  return customer ? stripInternalAttributes(customer) : null;
 };
 
 export default (userId) => ({

@@ -19,7 +19,6 @@ export const handler = async (event) => {
   } catch (err) {
     return generateResponse({
       statusCode: 500,
-      body: { error },
     });
   }
 };

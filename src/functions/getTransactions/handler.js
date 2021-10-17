@@ -8,12 +8,11 @@ export const handler = async (event) => {
   const transactions = Transactions(userId);
   if (transactionId) {
     const transaction = await transactions.getTransaction(transactionId);
-    return (
-      generateResponse({ body: transaction }) ||
-      generateResponse({
-        statusCode: 404,
-      })
-    );
+    return transaction
+      ? generateResponse({ body: transaction })
+      : generateResponse({
+          statusCode: 404,
+        });
   } else {
     const allTransactions = await transactions.getAllTransactions(accountId);
     return generateResponse({

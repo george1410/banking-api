@@ -60,7 +60,7 @@ const getTransaction = async (userId, transactionId) => {
     `TRANSACTION#${transactionId}`
   );
 
-  return stripInternalAttributes(transaction);
+  return transaction ? stripInternalAttributes(transaction) : null;
 };
 
 const deleteAllTransactions = async (userId, accountId) => {

@@ -49,7 +49,7 @@ const getAllAccounts = async (userId, customerId) => {
 
 const getAccount = async (userId, accountId) => {
   const account = await getByKey(`USER#${userId}`, `ACCOUNT#${accountId}`);
-  return stripInternalAttributes(account);
+  return account ? stripInternalAttributes(account) : null;
 };
 
 const deleteAccount = async (userId, accountId) =>

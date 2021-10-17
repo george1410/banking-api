@@ -9,12 +9,11 @@ export const handler = async (event) => {
 
   if (customerId) {
     const customer = await customers.getCustomer(customerId);
-    return (
-      generateResponse({ body: customer }) ||
-      generateResponse({
-        statusCode: 404,
-      })
-    );
+    return customer
+      ? generateResponse({ body: customer })
+      : generateResponse({
+          statusCode: 404,
+        });
   } else {
     const allCustomers = await customers.getAllCustomers();
     return generateResponse({
