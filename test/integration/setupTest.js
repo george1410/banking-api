@@ -1,7 +1,18 @@
-import { CreateTableCommand } from '@aws-sdk/client-dynamodb';
+import {
+  CreateTableCommand,
+  DeleteTableCommand,
+} from '@aws-sdk/client-dynamodb';
 import { client } from '../../src/database/common/ddbClient';
 
-export default async () => {
+beforeEach(async () => {
+  const params = {
+    TableName: 'banking-api',
+  };
+
+  try {
+    await client.send(new DeleteTableCommand(params));
+  } catch (err) {}
+
   const createTableParams = {
     TableName: 'banking-api',
     AttributeDefinitions: [
@@ -39,4 +50,4 @@ export default async () => {
   try {
     await client.send(new CreateTableCommand(createTableParams));
   } catch (err) {}
-};
+});

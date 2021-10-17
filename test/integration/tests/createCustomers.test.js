@@ -1,4 +1,4 @@
-import { handler } from '../../src/functions/createCustomers/handler';
+import { handler } from '../../../src/functions/createCustomers/handler';
 
 const customerAllCustomFields = {
   firstName: 'George',
