@@ -1,4 +1,5 @@
 import Customers from '../../database/customers';
+import generateResponse from '../../lib/generateResponse';
 
 export const handler = async (event) => {
   const { customerId } = event.pathParameters || {};
@@ -15,9 +16,9 @@ export const handler = async (event) => {
       })
     );
   } else {
-    const customers = await customers.getAllCustomers();
+    const allCustomers = await customers.getAllCustomers();
     return generateResponse({
-      body: customers,
+      body: allCustomers,
     });
   }
 };

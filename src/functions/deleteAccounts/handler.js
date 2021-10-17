@@ -1,4 +1,5 @@
 import Accounts from '../../database/accounts';
+import generateResponse from '../../lib/generateResponse';
 
 export const handler = async (event) => {
   const userId = event.requestContext.authorizer.jwt.claims.sub;

@@ -1,4 +1,5 @@
 import Transactions from '../../database/transactions';
+import generateResponse from '../../lib/generateResponse';
 
 export const handler = async (event) => {
   const deleteAccountEvents = event.Records.filter(
