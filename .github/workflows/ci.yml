@@ -32,3 +32,9 @@ jobs:
 
       - name: Integration Test
         run: npm run test:integration
+
+      - name: Package
+        run: npm run package
+
+      - name: Deploy
+        run: npm run deploy-only

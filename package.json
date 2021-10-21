@@ -8,7 +8,10 @@
     "test:integration": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js ; npm run local-dynamodb:stop",
     "test:integration:keep": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js",
     "local-dynamodb:start": "docker compose -f test/integration/docker-compose.yml up -d",
-    "local-dynamodb:stop": "docker compose -f test/integration/docker-compose.yml down"
+    "local-dynamodb:stop": "docker compose -f test/integration/docker-compose.yml down",
+    "package": "serverless package",
+    "deploy-only": "serverless deploy -p .serverless",
+    "deploy": "serverless deploy"
   },
   "author": "",
   "license": "ISC",
