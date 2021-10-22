@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:unit": "jest src",
-    "test:integration": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js ; npm run local-dynamodb:stop",
-    "test:integration:keep": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js",
+    "test:integration": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js --runInBand ; npm run local-dynamodb:stop",
+    "test:integration:keep": "npm run local-dynamodb:start && jest test/integration --config test/integration/jest.config.js --runInBand",
     "test:system": "cucumber-js test/system/features --publish-quiet",
     "local-dynamodb:start": "docker compose -f test/integration/docker-compose.yml up -d",
     "local-dynamodb:stop": "docker compose -f test/integration/docker-compose.yml down",
