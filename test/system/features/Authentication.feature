@@ -4,7 +4,8 @@ Feature: Authentication
   So that nobody else can modify the data I have created
 
   Scenario Outline: Request without Authorization header
-    Given I make an unauthorized <method> request to <endpoint>
+    Given I have no auth token
+    And I make a <method> request to <endpoint>
     When I receive a response
     Then I expect the response to have status 401
     And I expect the response to have json body
@@ -29,7 +30,8 @@ Feature: Authentication
       | POST   | /accounts/12345/transactions |
 
   Scenario Outline: Request with invalid auth token
-    Given I make a <method> request with invalid token to <endpoint>
+    Given I have an invalid auth token
+    And I make a <method> request to <endpoint>
     When I receive a response
     Then I expect the response to have status 401
     And I expect the response to have json body

@@ -24,7 +24,6 @@
     "aws-sdk-client-mock": "^0.5.5",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
-    "pactum": "^3.0.21",
     "serverless": "^2.60.0",
     "serverless-bundle": "^5.0.2",
     "serverless-domain-manager": "^5.1.5",

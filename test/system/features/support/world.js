@@ -1,6 +1,14 @@
-const { Before } = require('@cucumber/cucumber');
-const { request } = require('pactum');
+const { setWorldConstructor, World } = require('@cucumber/cucumber');
+const axios = require('axios');
 
-Before(() => {
-  request.setBaseUrl('https://banking-api.aws.georgemccarron.com');
-});
+axios.defaults.baseURL = 'https://banking-api.aws.georgemccarron.com';
+
+class CustomWorld extends World {
+  constructor(options) {
+    // needed so `attach`, `log` and `parameters` are properly set
+    super(options);
+    this.context = {};
+  }
+}
+
+setWorldConstructor(CustomWorld);
