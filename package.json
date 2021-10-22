@@ -14,7 +14,7 @@
     "deploy-only": "serverless deploy -p .serverless",
     "deploy": "serverless deploy"
   },
-  "author": "",
+  "author": "George McCarron",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.15.8",
