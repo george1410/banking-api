@@ -10,7 +10,7 @@ Then('I expect the response to have json body', function (json) {
 });
 
 Then(
-  'I expect the response be an array containing {int} item',
+  /^I expect the response to be an array containing (\d+) items?$/,
   function (count) {
     assertThat(this.context.response.data.length, equalTo(count));
   }
