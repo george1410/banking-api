@@ -50,7 +50,7 @@ jobs:
             --region us-east-1
           aws cognito-idp admin-set-user-password \
             --user-pool-id us-east-1_T6MA1RsCR \
-            --username test-user-2 \
+            --username test-user-${{ github.run_number }}-${{ github.run_attempt }} \
             --password ${{ secrets.TEST_ACCOUNT_PASSWORD }} \
             --permanent \
             --region us-east-1
