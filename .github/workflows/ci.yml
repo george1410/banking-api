@@ -38,3 +38,6 @@ jobs:
 
       - name: Deploy
         run: npm run deploy-only
+      
+      - name: System Test
+        run: npm run test:system
