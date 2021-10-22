@@ -43,6 +43,11 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          BEARER_TOKEN=`AWS_PAGER="" aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --client-id 5dn5jkqc0h60h45g8hrf83mln --auth-parameters USERNAME=cicd-test-account,PASSWORD=${{ secrets.TEST_ACCOUNT_PASSWORD }} --region us-east-1 --query 'AuthenticationResult.AccessToken' --output text`
-          curl https://banking-api.aws.georgemccarron.com/customers -H "Authorization: $BEARER_TOKEN"
+          export BEARER_TOKEN=`aws cognito-idp initiate-auth \
+            --auth-flow USER_PASSWORD_AUTH \
+            --client-id 5dn5jkqc0h60h45g8hrf83mln \
+            --auth-parameters USERNAME=cicd-test-account,PASSWORD=${{ secrets.TEST_ACCOUNT_PASSWORD }} \
+            --region us-east-1 \
+            --query 'AuthenticationResult.AccessToken' \
+            --output text`
           npm run test:system

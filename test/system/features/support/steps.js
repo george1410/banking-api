@@ -7,6 +7,10 @@ Before(() => {
   spec = pactum.spec();
 });
 
+Given(/^I make a (.*) request to (.*)$/, (method, endpoint) => {
+  spec[method.toLowerCase()](endpoint);
+});
+
 Given(/^I make an unauthorized (.*) request to (.*)$/, (method, endpoint) => {
   spec[method.toLowerCase()](endpoint);
 });
@@ -21,6 +25,11 @@ Given(
     );
   }
 );
+
+Given(/^I have a valid auth token$/, () => {
+  console.log(process.env.BEARER_TOKEN);
+  spec.withHeaders('Authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+});
 
 When('I receive a response', async () => {
   await spec.toss();
