@@ -19,6 +19,16 @@ describe('Delete by key', () => {
     expect(result).toEqual({ PK: 'somePK', SK: 'someSK' });
   });
 
+  test('should return null if the item to delete does not exist', async () => {
+    ddbMock
+      .rejects('mock rejection')
+      .on(DeleteCommand, { Key: { PK: 'somePK', SK: 'someSK' } })
+      .resolves({ Attributes: undefined });
+
+    const result = await deleteByKey('somePK', 'someSK');
+    expect(result).toBeNull();
+  });
+
   test('should throw an error if the dynamodb request fails', async () => {
     ddbMock.on(DeleteCommand).rejects('mocked rejection');
 
