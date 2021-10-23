@@ -18,15 +18,15 @@ export const handler = async (event) => {
         });
   } else {
     const customer = await customers.getCustomer(customerId);
-    if (customer) {
-      const allAccounts = await accounts.getAllAccounts(customerId);
-      return generateResponse({
-        body: allAccounts,
-      });
-    } else {
+    if (!customer) {
       return generateResponse({
         statusCode: 404,
       });
     }
+
+    const allAccounts = await accounts.getAllAccounts(customerId);
+    return generateResponse({
+      body: allAccounts,
+    });
   }
 };
