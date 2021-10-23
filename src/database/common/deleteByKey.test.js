@@ -13,10 +13,12 @@ describe('Delete by key', () => {
     ddbMock
       .rejects('mock rejection')
       .on(DeleteCommand, { Key: { PK: 'somePK', SK: 'someSK' } })
-      .resolves({ Attributes: { PK: 'somePK', SK: 'someSK' } });
+      .resolves({
+        Attributes: { PK: 'somePK', SK: 'someSK', otherThing: 'Hello' },
+      });
 
     const result = await deleteByKey('somePK', 'someSK');
-    expect(result).toEqual({ PK: 'somePK', SK: 'someSK' });
+    expect(result).toEqual({ PK: 'somePK', SK: 'someSK', otherThing: 'Hello' });
   });
 
   test('should return null if the item to delete does not exist', async () => {
