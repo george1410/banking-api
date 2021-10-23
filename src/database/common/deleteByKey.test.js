@@ -8,15 +8,15 @@ beforeEach(() => {
   ddbMock.reset();
 });
 
-describe('Get by key', () => {
+describe('Delete by key', () => {
   test('should return the result of a successful deletion from the database', async () => {
     ddbMock
       .rejects('mock rejection')
       .on(DeleteCommand, { Key: { PK: 'somePK', SK: 'someSK' } })
-      .resolves({ some: 'object' });
+      .resolves({ Attributes: { PK: 'somePK', SK: 'someSK' } });
 
     const result = await deleteByKey('somePK', 'someSK');
-    expect(result).toEqual({ some: 'object' });
+    expect(result).toEqual({ PK: 'somePK', SK: 'someSK' });
   });
 
   test('should throw an error if the dynamodb request fails', async () => {
