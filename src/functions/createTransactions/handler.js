@@ -1,4 +1,5 @@
 import Transactions from '../../database/transactions';
+import Accounts from '../../database/accounts';
 import generateResponse from '../../lib/generateResponse';
 import validateRequestBody from '../../lib/validateRequestBody';
 import generateTransactions from './generateTransactions';
@@ -8,6 +9,12 @@ export const handler = async (event) => {
   const { quantity } = event.queryStringParameters || {};
   const { accountId } = event.pathParameters;
   const userId = event.requestContext.authorizer.jwt.claims.sub;
+
+  if (!(await Accounts(userId).getAccount(accountId))) {
+    return generateResponse({
+      statusCode: 404,
+    });
+  }
 
   if (quantity !== undefined && !Number(quantity)) {
     return generateResponse({
