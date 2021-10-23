@@ -33,6 +33,7 @@ provider:
 plugins:
   - serverless-bundle
   - serverless-domain-manager
+  - serverless-plugin-lambda-insights
 
 custom:
   customDomain:
@@ -41,6 +42,8 @@ custom:
     endpointType: regional
     apiType: http
     autoDomain: true
+  lambdaInsights:
+    defaultLambdaInsights: true
 
 package:
   individually: true
