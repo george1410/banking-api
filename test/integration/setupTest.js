@@ -9,7 +9,11 @@ beforeEach(async () => {
     TableName: 'banking-api',
   };
 
-  await client.send(new DeleteTableCommand(params));
+  try {
+    await client.send(new DeleteTableCommand(params));
+  } catch (err) {
+    // do nothing
+  }
 
   const createTableParams = {
     TableName: 'banking-api',
