@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const { Given } = require('@cucumber/cucumber');
 
 Given('I make a {word} request to {word}', function (method, endpoint) {

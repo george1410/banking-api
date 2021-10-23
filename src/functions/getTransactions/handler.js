@@ -15,7 +15,7 @@ export const handler = async (event) => {
       : generateResponse({
           statusCode: 404,
         });
-  } else {
+  } 
     const account = await accounts.getAccount(accountId);
     if (!account) {
       return generateResponse({
@@ -27,5 +27,5 @@ export const handler = async (event) => {
     return generateResponse({
       body: allTransactions,
     });
-  }
+  
 };

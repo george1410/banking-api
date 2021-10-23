@@ -9,11 +9,13 @@ export const handler = async (event) => {
   );
 
   try {
+    const deletions = [];
     for (const deleteAccountEvent of deleteAccountEvents) {
       const accountId = deleteAccountEvent.dynamodb.Keys.SK.S.split('#')[1];
       const userId = deleteAccountEvent.dynamodb.Keys.PK.S.split('#')[1];
-      await Transactions(userId).deleteAllTransactions(accountId);
+      deletions.push(Transactions(userId).deleteAllTransactions(accountId));
     }
+    await Promise.all(deletions);
 
     return generateResponse({
       statusCode: 200,

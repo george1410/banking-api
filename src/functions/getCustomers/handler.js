@@ -14,10 +14,10 @@ export const handler = async (event) => {
       : generateResponse({
           statusCode: 404,
         });
-  } else {
+  } 
     const allCustomers = await customers.getAllCustomers();
     return generateResponse({
       body: allCustomers,
     });
-  }
+  
 };

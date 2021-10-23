@@ -44,6 +44,8 @@ custom:
     autoDomain: true
   lambdaInsights:
     defaultLambdaInsights: true
+  bundle:
+    linting: false
 
 package:
   individually: true

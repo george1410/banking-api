@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const { When } = require('@cucumber/cucumber');
 const axios = require('axios');
 

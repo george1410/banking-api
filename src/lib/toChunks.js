@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export default (arr, chunkSize) =>
   arr.reduce((all, one, i) => {
     const ch = Math.floor(i / chunkSize);

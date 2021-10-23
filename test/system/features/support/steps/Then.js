@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const { Then } = require('@cucumber/cucumber');
 const { assertThat, equalTo } = require('hamjest');
 

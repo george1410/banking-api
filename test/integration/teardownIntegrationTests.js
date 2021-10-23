@@ -6,7 +6,5 @@ export default async () => {
     TableName: 'banking-api',
   };
 
-  try {
-    await client.send(new DeleteTableCommand(params));
-  } catch (err) {}
+  await client.send(new DeleteTableCommand(params));
 };

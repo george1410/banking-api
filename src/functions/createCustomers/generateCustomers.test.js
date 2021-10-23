@@ -1,6 +1,6 @@
+import axios from 'axios';
 import generateCustomers from './generateCustomers';
 import randomUsers from '../../../test/unit/mockData/randomUsers.json';
-import axios from 'axios';
 
 jest.mock('axios');
 

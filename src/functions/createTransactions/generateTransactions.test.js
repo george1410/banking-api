@@ -1,7 +1,7 @@
 import axios from 'axios';
+import currency from 'currency.js';
 import generateTransactions from './generateTransactions';
 import randomCompanies from '../../../test/unit/mockData/randomCompanies.json';
-import currency from 'currency.js';
 
 const randomSpy = jest.spyOn(global.Math, 'random');
 

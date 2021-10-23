@@ -13,18 +13,19 @@ const writeToDatabase = async (items) => {
 
   const chunkedRequests = toChunks(requests, 25);
 
+  const dbCommands = [];
   for (const chunk of chunkedRequests) {
     const params = {
       RequestItems: {
         'banking-api': chunk,
       },
     };
-
-    try {
-      await ddbClient.send(new BatchWriteCommand(params));
-    } catch (err) {
-      throw new Error(500);
-    }
+    dbCommands.push(ddbClient.send(new BatchWriteCommand(params)));
+  }
+  try {
+    await Promise.all(dbCommands);
+  } catch (err) {
+    throw new Error(500);
   }
 };
 

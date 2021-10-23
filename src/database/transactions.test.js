@@ -162,10 +162,7 @@ describe('Transactions data layer', () => {
           transactionDate: '2021-10-16T20:55:39.656Z',
         },
       ];
-      const transactions = await Transactions(userId).insertTransactions(
-        accountId,
-        transactionData
-      );
+      await Transactions(userId).insertTransactions(accountId, transactionData);
 
       expect(mockUpdateBalance).toHaveBeenCalledWith(
         accountId,

@@ -14,18 +14,20 @@ const deleteFromDatabase = async (keys) => {
 
   const chunkedRequests = toChunks(requests, 25);
 
+  const dbCommands = [];
   for (const chunk of chunkedRequests) {
     const params = {
       RequestItems: {
-        ['banking-api']: chunk,
+        'banking-api': chunk,
       },
     };
+    dbCommands.push(ddbClient.send(new BatchWriteCommand(params)));
+  }
 
-    try {
-      await ddbClient.send(new BatchWriteCommand(params));
-    } catch (err) {
-      throw new Error(500);
-    }
+  try {
+    await Promise.all(dbCommands);
+  } catch (err) {
+    throw new Error(500);
   }
 };
 
