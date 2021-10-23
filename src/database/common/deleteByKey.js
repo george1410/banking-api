@@ -8,10 +8,11 @@ const deleteByKey = async (PK, SK) => {
       PK,
       SK,
     },
+    ReturnValues: 'ALL_OLD',
   };
 
   try {
-    return await ddbClient.send(new DeleteCommand(params));
+    return (await ddbClient.send(new DeleteCommand(params))).Attributes;
   } catch (err) {
     throw new Error(500);
   }
