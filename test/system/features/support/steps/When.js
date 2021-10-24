@@ -10,6 +10,7 @@ When('I receive a response', async function () {
         this.context.body,
         {
           headers: this.context.headers,
+          params: this.context.params,
         }
       );
     } else {

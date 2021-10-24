@@ -1,5 +1,6 @@
 /* eslint-disable func-names */
 const { Given } = require('@cucumber/cucumber');
+const { default: clearUserData } = require('../utils/clearUserData');
 
 Given('I make a {word} request to {word}', function (method, endpoint) {
   this.context.method = method;
@@ -25,4 +26,15 @@ Given('I have a valid auth token', function () {
     ...this.context.headers,
     Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
   };
+});
+
+Given('I set the quantity parameter to {int}', function (quantity) {
+  this.context.params = {
+    ...this.context.params,
+    quantity,
+  };
+});
+
+Given('I have not created any data', async () => {
+  await clearUserData();
 });
