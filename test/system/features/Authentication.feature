@@ -5,8 +5,7 @@ Feature: Authentication
 
   Scenario Outline: Request without Authorization header
     Given I have no auth token
-    And I make a <method> request to <endpoint>
-    When I receive a response
+    When I make a <method> request to <endpoint>
     Then I expect the response to have status 401
     And I expect the response to have json body
       """
@@ -31,8 +30,7 @@ Feature: Authentication
 
   Scenario Outline: Request with invalid auth token
     Given I have an invalid auth token
-    And I make a <method> request to <endpoint>
-    When I receive a response
+    When I make a <method> request to <endpoint>
     Then I expect the response to have status 401
     And I expect the response to have json body
       """

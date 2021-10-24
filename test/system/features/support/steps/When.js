@@ -2,11 +2,11 @@
 const { When } = require('@cucumber/cucumber');
 const axios = require('axios');
 
-When('I receive a response', async function () {
+When('I make a {word} request to {word}', async function (method, endpoint) {
   try {
-    if (this.context.method === 'POST') {
-      this.context.response = await axios[this.context.method.toLowerCase()](
-        this.context.url,
+    if (method === 'POST') {
+      this.context.response = await axios[method.toLowerCase()](
+        endpoint,
         this.context.body,
         {
           headers: this.context.headers,
@@ -14,12 +14,9 @@ When('I receive a response', async function () {
         }
       );
     } else {
-      this.context.response = await axios[this.context.method.toLowerCase()](
-        this.context.url,
-        {
-          headers: this.context.headers,
-        }
-      );
+      this.context.response = await axios[method.toLowerCase()](endpoint, {
+        headers: this.context.headers,
+      });
     }
   } catch (err) {
     if (err.response) {

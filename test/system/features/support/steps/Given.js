@@ -2,11 +2,6 @@
 const { Given } = require('@cucumber/cucumber');
 const { default: clearUserData } = require('../utils/clearUserData');
 
-Given('I make a {word} request to {word}', function (method, endpoint) {
-  this.context.method = method;
-  this.context.url = endpoint;
-});
-
 Given('I have no auth token', function () {
   this.context.headers = {
     ...this.context.headers,
