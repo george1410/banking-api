@@ -46,21 +46,10 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws cognito-idp admin-create-user \
-            --user-pool-id us-east-1_T6MA1RsCR \
-            --username test-user-${{ github.run_number }}-${{ github.run_attempt }} \
-            --message-action SUPPRESS \
-            --region us-east-1
-          aws cognito-idp admin-set-user-password \
-            --user-pool-id us-east-1_T6MA1RsCR \
-            --username test-user-${{ github.run_number }}-${{ github.run_attempt }} \
-            --password ${{ secrets.TEST_ACCOUNT_PASSWORD }} \
-            --permanent \
-            --region us-east-1
           export BEARER_TOKEN=`aws cognito-idp initiate-auth \
             --auth-flow USER_PASSWORD_AUTH \
             --client-id 5dn5jkqc0h60h45g8hrf83mln \
-            --auth-parameters USERNAME=test-user-${{ github.run_number }}-${{ github.run_attempt }},PASSWORD=${{ secrets.TEST_ACCOUNT_PASSWORD }} \
+            --auth-parameters USERNAME=cicd-test-account,PASSWORD=${{ secrets.TEST_ACCOUNT_PASSWORD }} \
             --region us-east-1 \
             --query 'AuthenticationResult.AccessToken' \
             --output text`
